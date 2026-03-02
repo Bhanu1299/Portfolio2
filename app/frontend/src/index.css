@@ -1,0 +1,294 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Reveal animation variable */
+    --reveal-x: 50%;
+    --reveal-y: 0px;
+    --reveal-size: 0px;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ===== LIGHT MODE OVERRIDES ===== */
+/* These override ONLY colors for the custom portfolio components */
+/* Spacing, typography, sizing, layout remain untouched */
+
+/* Light mode: page-level backgrounds */
+.light .theme-page-bg {
+  background-color: #F5F5F7 !important;
+  color: #1a1a2e !important;
+}
+
+/* Light mode: navbar */
+.light .theme-nav-scrolled {
+  background-color: rgba(245, 245, 247, 0.85) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06) !important;
+}
+
+.light .theme-nav-mobile {
+  background-color: rgba(245, 245, 247, 0.97) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Light mode: text colors */
+.light .theme-text-primary {
+  color: #1a1a2e !important;
+}
+
+.light .theme-text-secondary {
+  color: #4a4a6a !important;
+}
+
+.light .theme-text-muted {
+  color: #6b7280 !important;
+}
+
+.light .theme-text-nav {
+  color: #6b7280 !important;
+}
+
+.light .theme-text-nav:hover {
+  color: #1a1a2e !important;
+}
+
+/* Light mode: hero overlay */
+.light .theme-hero-overlay {
+  background-color: rgba(245, 245, 247, 0.75) !important;
+}
+
+/* Light mode: cards and surfaces */
+.light .theme-card {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+.light .theme-card:hover {
+  border-color: rgba(99, 102, 241, 0.25) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Light mode: resume card */
+.light .theme-resume-card {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.06), rgba(139, 92, 246, 0.06)) !important;
+  border-color: rgba(99, 102, 241, 0.15) !important;
+}
+
+/* Light mode: badges/pills */
+.light .theme-badge {
+  background-color: rgba(99, 102, 241, 0.08) !important;
+  color: #4338ca !important;
+  border-color: rgba(99, 102, 241, 0.15) !important;
+}
+
+.light .theme-badge-tag {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  color: #4a4a6a !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Light mode: buttons */
+.light .theme-btn-secondary {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: #1a1a2e !important;
+}
+
+.light .theme-btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Light mode: social/icon buttons */
+.light .theme-icon-btn {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #6b7280 !important;
+}
+
+.light .theme-icon-btn:hover {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  color: #1a1a2e !important;
+}
+
+/* Light mode: form inputs */
+.light .theme-input {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #1a1a2e !important;
+}
+
+.light .theme-input::placeholder {
+  color: #9ca3af !important;
+}
+
+.light .theme-input:focus {
+  border-color: rgba(99, 102, 241, 0.4) !important;
+}
+
+/* Light mode: status badge */
+.light .theme-status-pill {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Light mode: footer */
+.light .theme-footer {
+  border-top-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Light mode: floating shapes - more visible on light */
+.light .theme-shape-border {
+  border-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Light mode: gradient orbs - softer on light */
+.light .theme-orb-indigo {
+  background-color: rgba(99, 102, 241, 0.08) !important;
+}
+
+.light .theme-orb-violet {
+  background-color: rgba(139, 92, 246, 0.06) !important;
+}
+
+/* Light mode: section decorative blurs */
+.light .theme-section-glow {
+  opacity: 0.4 !important;
+}
+
+/* Light mode: wireframe shapes */
+.light .theme-wireframe {
+  border-color: rgba(99, 102, 241, 0.12) !important;
+}
+
+/* Light mode: project image overlay */
+.light .theme-img-overlay {
+  background: linear-gradient(to top, #F5F5F7, rgba(245,245,247,0.4), transparent) !important;
+}
+
+/* Smooth transition for theme changes - scoped to color properties only */
+html.light .theme-page-bg,
+html.light .theme-card,
+html.light .theme-text-primary,
+html.light .theme-text-secondary,
+html.light .theme-text-muted,
+html.light .theme-text-nav,
+html.light .theme-nav-scrolled,
+html.light .theme-nav-mobile,
+html.light .theme-hero-overlay,
+html.light .theme-input,
+html.light .theme-btn-secondary,
+html.light .theme-icon-btn,
+html.light .theme-badge,
+html.light .theme-badge-tag,
+html.light .theme-footer,
+html.light .theme-status-pill,
+html.light .theme-resume-card,
+html.dark .theme-page-bg,
+html.dark .theme-card,
+html.dark .theme-text-primary,
+html.dark .theme-text-secondary,
+html.dark .theme-text-muted,
+html.dark .theme-text-nav,
+html.dark .theme-nav-scrolled,
+html.dark .theme-nav-mobile,
+html.dark .theme-hero-overlay,
+html.dark .theme-input,
+html.dark .theme-btn-secondary,
+html.dark .theme-icon-btn,
+html.dark .theme-badge,
+html.dark .theme-badge-tag,
+html.dark .theme-footer,
+html.dark .theme-status-pill,
+html.dark .theme-resume-card {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
