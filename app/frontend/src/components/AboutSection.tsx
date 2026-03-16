@@ -3,48 +3,10 @@ import ScrollReveal from "./ScrollReveal";
 import Card3D from "./Card3D";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { skills, stats as rawStats, personalInfo } from "../data/portfolio";
 
-const skills = [
-  {
-    category: "Languages",
-    items: ["TypeScript", "Python", "Java", "Go", "SQL", "C++"],
-    color: "from-indigo-500 to-blue-500",
-  },
-  {
-    category: "Frontend",
-    items: ["React", "Next.js", "Tailwind CSS", "Redux", "Vue.js"],
-    color: "from-violet-500 to-purple-500",
-  },
-  {
-    category: "Backend",
-    items: ["Node.js", "Express", "FastAPI", "Spring Boot", "GraphQL"],
-    color: "from-cyan-500 to-teal-500",
-  },
-  {
-    category: "Cloud & DevOps",
-    items: ["AWS", "Docker", "Kubernetes", "CI/CD", "Terraform"],
-    color: "from-emerald-500 to-green-500",
-  },
-  {
-    category: "AI / ML",
-    items: ["PyTorch", "TensorFlow", "NLP", "Computer Vision", "LLMs"],
-    color: "from-pink-500 to-rose-500",
-  },
-  {
-    category: "Databases",
-    items: ["PostgreSQL", "MongoDB", "Redis", "Elasticsearch"],
-    color: "from-amber-500 to-orange-500",
-  },
-];
-
-const stats = [
-  { icon: Code2, value: "15+", label: "Projects Built" },
-  { icon: Cloud, value: "5+", label: "Cloud Deployments" },
-  { icon: Brain, value: "3+", label: "ML Models" },
-  { icon: Database, value: "10+", label: "APIs Designed" },
-  { icon: Terminal, value: "3+", label: "Years Coding" },
-  { icon: Globe, value: "2", label: "Internships" },
-];
+const statIcons = [Code2, Cloud, Brain, Database, Terminal, Globe];
+const stats = rawStats.map((s, i) => ({ ...s, icon: statIcons[i] }));
 
 function AnimatedCounter({ value }: { value: string }) {
   const ref = useRef(null);

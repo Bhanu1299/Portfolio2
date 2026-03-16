@@ -3,6 +3,7 @@ import { Send, Github, Linkedin, Mail, MapPin, Heart } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 import Card3D from "./Card3D";
 import { motion } from "framer-motion";
+import { personalInfo } from "../data/portfolio";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -50,7 +51,7 @@ export default function ContactSection() {
                     <h3 className="text-xl font-bold text-white mb-6 theme-text-primary">Get In Touch</h3>
                     <div className="space-y-5">
                       <motion.a
-                        href="mailto:bteja0519@email.com"
+                        href={`mailto:${personalInfo.email}`}
                         className="flex items-center gap-4 text-slate-300 hover:text-white transition-colors group/item theme-text-secondary"
                         whileHover={{ x: 5 }}
                       >
@@ -59,12 +60,13 @@ export default function ContactSection() {
                         </div>
                         <div>
                           <div className="text-xs text-slate-500 mb-0.5 theme-text-muted">Email</div>
-                          <div className="text-sm">bteja0519@email.com</div>
+                          <div className="text-sm">{personalInfo.email}</div>
                         </div>
                       </motion.a>
 
                       <motion.a
-                        href="#"
+                        href={personalInfo.linkedin}
+                        target="_blank" rel="noopener noreferrer"
                         className="flex items-center gap-4 text-slate-300 hover:text-white transition-colors group/item theme-text-secondary"
                         whileHover={{ x: 5 }}
                       >
@@ -73,12 +75,13 @@ export default function ContactSection() {
                         </div>
                         <div>
                           <div className="text-xs text-slate-500 mb-0.5 theme-text-muted">LinkedIn</div>
-                          <div className="text-sm">https://www.linkedin.com/in/bhanuteja1299/</div>
+                          <div className="text-sm">linkedin.com/in/bhanuteja1299</div>
                         </div>
                       </motion.a>
 
                       <motion.a
-                        href="#"
+                        href={personalInfo.github}
+                        target="_blank" rel="noopener noreferrer"
                         className="flex items-center gap-4 text-slate-300 hover:text-white transition-colors group/item theme-text-secondary"
                         whileHover={{ x: 5 }}
                       >
@@ -87,7 +90,7 @@ export default function ContactSection() {
                         </div>
                         <div>
                           <div className="text-xs text-slate-500 mb-0.5 theme-text-muted">GitHub</div>
-                          <div className="text-sm">github.com/alexchen</div>
+                          <div className="text-sm">github.com/Bhanu1299</div>
                         </div>
                       </motion.a>
 
@@ -100,7 +103,7 @@ export default function ContactSection() {
                         </div>
                         <div>
                           <div className="text-xs text-slate-500 mb-0.5 theme-text-muted">Location</div>
-                          <div className="text-sm">San Francisco, CA • Open to Remote</div>
+                          <div className="text-sm">{personalInfo.location}</div>
                         </div>
                       </motion.div>
                     </div>
@@ -220,14 +223,14 @@ export default function ContactSection() {
       >
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-slate-500 theme-text-muted">
-            © 2026 Alex Chen. Built with{" "}
-            <Heart className="w-3 h-3 inline text-rose-400" /> and React.
+            {personalInfo.footerCopyright}{" "}
+            <Heart className="w-3 h-3 inline text-rose-400" />
           </p>
           <div className="flex items-center gap-4">
             {[
-              { icon: Github, href: "#", label: "GitHub" },
-              { icon: Linkedin, href: "#", label: "LinkedIn" },
-              { icon: Mail, href: "mailto:alex.chen@email.com", label: "Email" },
+              { icon: Github, href: personalInfo.github, label: "GitHub" },
+              { icon: Linkedin, href: personalInfo.linkedin, label: "LinkedIn" },
+              { icon: Mail, href: `mailto:${personalInfo.email}`, label: "Email" },
             ].map(({ icon: Icon, href, label }) => (
               <motion.a
                 key={label}

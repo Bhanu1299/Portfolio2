@@ -6,6 +6,7 @@ import Index from './pages/Index';
 import AuthCallback from './pages/AuthCallback';
 import AuthError from './pages/AuthError';
 // MODULE_IMPORTS_START
+
 // MODULE_IMPORTS_END
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/auth/callback" element={<AuthCallback />} />
           <Route path="/auth/error" element={<AuthError />} />
           {/* MODULE_ROUTES_START */}
+          
           {/* MODULE_ROUTES_END */}
         </Routes>
       </BrowserRouter>

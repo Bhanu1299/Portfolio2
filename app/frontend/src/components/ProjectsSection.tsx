@@ -2,72 +2,7 @@ import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 import Card3D from "./Card3D";
 import { motion } from "framer-motion";
-
-const projects = [
-  {
-    title: "CloudScale Analytics",
-    description:
-      "A real-time analytics dashboard built with React, Node.js, and WebSockets. Features live data streaming, interactive charts, and role-based access control.",
-    tags: ["React", "Node.js", "WebSocket", "PostgreSQL", "Docker"],
-    image:
-      "https://mgx-backend-cdn.metadl.com/generate/images/992286/2026-02-27/4ebe455c-75b7-4f03-b040-76637a740565.png",
-    github: "#",
-    live: "#",
-    featured: true,
-  },
-  {
-    title: "NeuralText Summarizer",
-    description:
-      "An NLP-powered text summarization tool using transformer models. Supports extractive and abstractive summarization with a clean web interface.",
-    tags: ["Python", "PyTorch", "FastAPI", "React", "Hugging Face"],
-    image:
-      "https://mgx-backend-cdn.metadl.com/generate/images/992286/2026-02-27/810518a1-e48c-4a6b-84c7-c6ad20a8b49d.png",
-    github: "#",
-    live: "#",
-    featured: true,
-  },
-  {
-    title: "MicroDeploy Platform",
-    description:
-      "A microservices deployment platform with automated CI/CD pipelines, container orchestration, and infrastructure-as-code using Terraform and Kubernetes.",
-    tags: ["Go", "Kubernetes", "Terraform", "AWS", "gRPC"],
-    image:
-      "https://mgx-backend-cdn.metadl.com/generate/images/992286/2026-02-27/d86bb0e4-2c6b-4353-88a1-834ca08dd410.png",
-    github: "#",
-    live: "#",
-    featured: true,
-  },
-  {
-    title: "TaskFlow",
-    description:
-      "A collaborative project management tool with real-time updates, Kanban boards, and team analytics. Built as a full-stack SaaS application.",
-    tags: ["Next.js", "TypeScript", "Prisma", "Redis", "Tailwind"],
-    image: "",
-    github: "#",
-    live: "#",
-    featured: false,
-  },
-  {
-    title: "SecureVault API",
-    description:
-      "A RESTful API for encrypted file storage with JWT authentication, rate limiting, and comprehensive API documentation using OpenAPI.",
-    tags: ["Java", "Spring Boot", "AWS S3", "JWT", "Swagger"],
-    image: "",
-    github: "#",
-    live: "#",
-    featured: false,
-  },
-  {
-    title: "DataPipe ETL",
-    description:
-      "An ETL pipeline framework for processing large-scale datasets with Apache Spark, supporting batch and stream processing workflows.",
-    tags: ["Python", "Apache Spark", "Airflow", "SQL", "Docker"],
-    image: "",
-    github: "#",
-    live: "#",
-    featured: false,
-  },
-];
+import { projects } from "../data/portfolio";
 
 export default function ProjectsSection() {
   const featured = projects.filter((p) => p.featured);

@@ -1,30 +1,37 @@
 import { useEffect, useState } from "react";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useMotionTemplate } from "framer-motion";
+import { personalInfo } from "../data/portfolio";
+import { SmokeBackground } from "@/components/ui/spooky-smoke-animation";
 
-const roles = [
-  "Software Engineer",
-  "Full-Stack Developer",
-  "ML Enthusiast",
-  "Problem Solver",
-];
-
-const floatingShapes = [
-  { size: 80, x: "10%", y: "20%", delay: 0, color: "bg-indigo-500/10", blur: "blur-xl" },
-  { size: 50, x: "80%", y: "15%", delay: 1, color: "bg-violet-500/10", blur: "blur-lg" },
-  { size: 60, x: "70%", y: "70%", delay: 2, color: "bg-cyan-500/10", blur: "blur-xl" },
-  { size: 40, x: "20%", y: "75%", delay: 0.5, color: "bg-pink-500/10", blur: "blur-lg" },
-  { size: 35, x: "50%", y: "10%", delay: 1.5, color: "bg-emerald-500/10", blur: "blur-md" },
-];
+const roles = personalInfo.roles;
 
 export default function HeroSection() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  
   const { scrollY } = useScroll();
-  const bgY = useTransform(scrollY, [0, 800], [0, 300]);
   const contentY = useTransform(scrollY, [0, 800], [0, 150]);
   const opacity = useTransform(scrollY, [0, 600], [1, 0]);
+
+  // Mouse tracking springs for the interactive background
+  const mouseX = useSpring(0, { stiffness: 30, damping: 20 });
+  const mouseY = useSpring(0, { stiffness: 30, damping: 20 });
+
+  useEffect(() => {
+    // Center it initially
+    mouseX.set(window.innerWidth / 2);
+    mouseY.set(window.innerHeight / 2);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
 
   useEffect(() => {
     const currentRole = roles[roleIndex];
@@ -52,68 +59,37 @@ export default function HeroSection() {
   }, [text, isDeleting, roleIndex]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Parallax Background */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030303]">
+      
+      {/* 0. Spooky Smoke Background layer */}
+      <div className="absolute inset-0 z-0 opacity-50">
+        <SmokeBackground smokeColor="#6366f1" /> {/* Indigo smoke */}
+      </div>
+
+      {/* 1. Static dark radial gradients for depth in the corners */}
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_0%_0%,rgba(30,30,35,0.4),transparent_50%)] pointer-events-none z-0" />
+      <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_100%_100%,rgba(20,20,25,0.4),transparent_50%)] pointer-events-none" />
+
+      {/* 2. Interactive "Smoke/Light" gradient following the mouse */}
       <motion.div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `url(https://mgx-backend-cdn.metadl.com/generate/images/992286/2026-02-27/fc614792-d6bc-4677-aa86-2d17d809edf0.png)`,
-          y: bgY,
+          background: useMotionTemplate`radial-gradient(circle 600px at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.07), transparent 80%)`
         }}
       />
-      <div className="absolute inset-0 bg-[#0A0A0F]/70 theme-hero-overlay" />
+      
+      {/* 3. Liquid Glass Diffusion Layer (Blurs the light/smoke beneath it) */}
+      <div className="absolute inset-0 backdrop-blur-[40px] pointer-events-none" />
 
-      {/* 3D Floating Geometric Shapes */}
-      {floatingShapes.map((shape, i) => (
-        <motion.div
-          key={i}
-          className={`absolute rounded-full ${shape.color} ${shape.blur} border border-white/[0.05] theme-shape-border`}
-          style={{
-            width: shape.size,
-            height: shape.size,
-            left: shape.x,
-            top: shape.y,
-          }}
-          animate={{
-            y: [0, -30, 0],
-            x: [0, 15, 0],
-            rotate: [0, 180, 360],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 8 + i * 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: shape.delay,
-          }}
-        />
-      ))}
+      {/* 4. Fine Noise Texture Overlay for that premium tactile feel */}
+      <div 
+        className="absolute inset-0 opacity-[0.25] pointer-events-none mix-blend-overlay" 
+        style={{ 
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` 
+        }} 
+      />
 
-      {/* 3D Rotating wireframe cube */}
-      <motion.div
-        className="absolute right-[15%] top-[25%] hidden lg:block"
-        animate={{ rotateX: 360, rotateY: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        style={{ perspective: "600px", transformStyle: "preserve-3d" }}
-      >
-        <div className="w-24 h-24 border border-indigo-500/20 rounded-lg theme-wireframe" style={{ transformStyle: "preserve-3d" }} />
-      </motion.div>
-
-      {/* 3D Rotating ring */}
-      <motion.div
-        className="absolute left-[10%] bottom-[30%] hidden lg:block"
-        animate={{ rotateY: 360 }}
-        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-        style={{ perspective: "600px" }}
-      >
-        <div className="w-20 h-20 rounded-full border-2 border-violet-500/20 theme-wireframe" />
-      </motion.div>
-
-      {/* Animated gradient orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-[128px] animate-pulse theme-orb-indigo" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-violet-600/15 rounded-full blur-[128px] animate-pulse theme-orb-violet" />
-
-      {/* Content with parallax */}
+      {/* Content Container */}
       <motion.div
         className="relative z-10 max-w-4xl mx-auto px-6 text-center"
         style={{ y: contentY, opacity }}
@@ -124,43 +100,41 @@ export default function HeroSection() {
           transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
         >
           <motion.div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 theme-status-pill"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-md"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-sm text-slate-300 theme-text-secondary">CS Master's Graduate • Available for Hire</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-400/80 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
+            <span className="text-sm font-light text-slate-300 tracking-wide">{personalInfo.statusBadge}</span>
           </motion.div>
 
           <motion.h1
-            className="text-5xl sm:text-7xl font-extrabold text-white mb-4 tracking-tight theme-text-primary"
+            className="text-5xl sm:text-7xl font-extrabold text-white mb-4 tracking-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.7 }}
           >
             Hi, I'm{" "}
-            <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
-              Bhanu Teja 
+            <span className="bg-gradient-to-r from-neutral-100 via-slate-300 to-neutral-500 bg-clip-text text-transparent">
+              {personalInfo.name}
             </span>
           </motion.h1>
 
           <div className="h-12 sm:h-14 flex items-center justify-center mb-8">
-            <span className="text-xl sm:text-2xl text-slate-300 font-light theme-text-secondary">
+            <span className="text-xl sm:text-2xl text-slate-300 font-light">
               {text}
-              <span className="inline-block w-[2px] h-6 bg-indigo-400 ml-1 animate-pulse" />
+              <span className="inline-block w-[2px] h-6 bg-slate-400 ml-1 animate-pulse" />
             </span>
           </div>
 
           <motion.p
-            className="text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed theme-text-muted"
+            className="text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
           >
-            Passionate about building scalable systems and intelligent applications.
-            Master's in Computer Science with expertise in full-stack development,
-            cloud architecture, and machine learning.
+            {personalInfo.tagline}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -174,7 +148,7 @@ export default function HeroSection() {
               onClick={() =>
                 document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" })
               }
-              className="px-8 py-3.5 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-semibold hover:shadow-lg hover:shadow-indigo-500/25 transition-all duration-300"
+              className="px-8 py-3.5 rounded-full bg-white text-black font-semibold hover:bg-slate-200 transition-all duration-300"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -184,7 +158,7 @@ export default function HeroSection() {
               onClick={() =>
                 document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })
               }
-              className="px-8 py-3.5 rounded-full bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all duration-300 theme-btn-secondary"
+              className="px-8 py-3.5 rounded-full bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -200,14 +174,14 @@ export default function HeroSection() {
             transition={{ delay: 0.9, duration: 0.6 }}
           >
             {[
-              { icon: Github, href: "#", label: "GitHub" },
-              { icon: Linkedin, href: "#", label: "LinkedIn" },
-              { icon: Mail, href: "#contact", label: "Email" },
+              { icon: Github, href: personalInfo.github, label: "GitHub" },
+              { icon: Linkedin, href: personalInfo.linkedin, label: "LinkedIn" },
+              { icon: Mail, href: `mailto:${personalInfo.email}`, label: "Email" },
             ].map(({ icon: Icon, href, label }) => (
               <motion.a
                 key={label}
                 href={href}
-                className="p-3 rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 hover:border-indigo-500/30 transition-all duration-300 theme-icon-btn"
+                className="p-3 rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 backdrop-blur-sm"
                 aria-label={label}
                 whileHover={{ scale: 1.15, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
